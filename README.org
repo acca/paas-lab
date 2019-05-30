@@ -11,39 +11,74 @@
 #+SELECT_TAGS: export
 #+EXCLUDE_TAGS: noexport
 #+CREATOR: Emacs 25.1.1 (Org mode 9.0.5)
+* Docker install
+** Upgrade your Lab Virtual Machine
+   Update packages
+   #+BEGIN_SRC sh
+   DEBIAN_FRONTEND=noninteractive sudo apt-get -qqy update
+   #+END_SRC
 
-* Upgrade your Lab Virtual Machine
-  Update packages
-  #+BEGIN_SRC sh
-  DEBIAN_FRONTEND=noninteractive sudo apt-get -qqy update
-  #+END_SRC
+   Upgrade packages
+   #+BEGIN_SRC sh
+   DEBIAN_FRONTEND=noninteractive sudo apt-get dist-upgrade -y
+   #+END_SRC
 
-  Upgrade packages
-  #+BEGIN_SRC sh
-  DEBIAN_FRONTEND=noninteractive sudo apt-get dist-upgrade -y
-  #+END_SRC
+** Install additional packages
+   Required are already installed, install other if you like
+   #+BEGIN_SRC sh
+   apt-get install PACKAGE_NAME
+   #+END_SRC
 
-* Install additional packages
-  Required are already installed, install other if you like
-  #+BEGIN_SRC sh
-  apt-get install PACKAGE_NAME
-  #+END_SRC
+** Install Docker on your Lab Virtual Machine
 
-* Install Docker on your Lab Virtual Machine
+   Install Docker
+   #+BEGIN_SRC sh
+   sudo apt-get install docker.io -y
+   #+END_SRC
 
-  Install Docker
-  #+BEGIN_SRC sh
-  sudo apt-get install docker.io -y
-  #+END_SRC
+   Enable ubuntu user to use Docker
+   #+BEGIN_SRC sh
+   sudo usermod -aG docker ubuntu
+   #+END_SRC
 
-  Enable ubuntu user to use Docker
-  #+BEGIN_SRC sh
-  sudo usermod -aG docker ubuntu
-  #+END_SRC
+   Logout & Login again
 
-  Logout & Login again
-
-* Test Docker installation
-  #+BEGIN_SRC sh
-  docker ps
-  #+END_SRC
+** Test Docker installation
+   #+BEGIN_SRC sh
+   docker ps
+   #+END_SRC
+* Exercise 4 – Build a custom Docker image
+     1) Start an ubuntu based image
+	#+BEGIN_SRC
+	docker run -it ubuntu
+	#+END_SRC
+     2) Install a package
+	#+BEGIN_SRC sh
+	  apt-get update
+	  apt-get install figlet
+	  exit
+	#+END_SRC
+     3) Show differences from the base image
+	#+BEGIN_SRC sh
+	docker diff <containerID>
+	#+END_SRC
+     4) Commit changes creating a new layer and the respective image. The output is the new image ID (=newImageID=)
+	#+BEGIN_SRC sh
+	docker commit <containerID>
+	#+END_SRC
+     5) Start a new container from that image
+	#+BEGIN_SRC sh
+	docker run -it <newImageID>
+	#+END_SRC
+     6) Give a name to the image
+	#+BEGIN_SRC sh
+	docker tag <newImageID> figlet
+	#+END_SRC
+	Or specify the tag as an extra argument of the commit
+	#+BEGIN_SRC sh
+	docker commit <containerID) figlet
+	#+END_SRC
+     7) Start a container based on that image using name
+	#+BEGIN_SRC sh
+	docker run -it figlet
+	#+END_SRC
