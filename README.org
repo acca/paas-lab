@@ -1,0 +1,49 @@
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+OPTIONS: author:t broken-links:nil c:nil creator:nil
+#+OPTIONS: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+OPTIONS: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+OPTIONS: timestamp:t title:t toc:t todo:t |:t
+#+TITLE: Fog and Cloud Computing 2019 - PaaS Lab
+#+DATE: <2019-05-30 Thu>
+#+AUTHOR: Daniele Santoro
+#+EMAIL: dsantoro@fbk.eu
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+CREATOR: Emacs 25.1.1 (Org mode 9.0.5)
+
+* Upgrade your Lab Virtual Machine
+  Update packages
+  #+BEGIN_SRC sh
+  DEBIAN_FRONTEND=noninteractive sudo apt-get -qqy update
+  #+END_SRC
+
+  Upgrade packages
+  #+BEGIN_SRC sh
+  DEBIAN_FRONTEND=noninteractive sudo apt-get dist-upgrade -y
+  #+END_SRC
+
+* Install additional packages
+  Required are already installed, install other if you like
+  #+BEGIN_SRC sh
+  apt-get install PACKAGE_NAME
+  #+END_SRC
+
+* Install Docker on your Lab Virtual Machine
+
+  Install Docker
+  #+BEGIN_SRC sh
+  sudo apt-get install docker.io -y
+  #+END_SRC
+
+  Enable ubuntu user to use Docker
+  #+BEGIN_SRC sh
+  sudo usermod -aG docker ubuntu
+  #+END_SRC
+
+  Logout & Login again
+
+* Test Docker installation
+  #+BEGIN_SRC sh
+  docker ps
+  #+END_SRC
