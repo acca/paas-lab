@@ -76,9 +76,103 @@
 	#+END_SRC
 	Or specify the tag as an extra argument of the commit
 	#+BEGIN_SRC sh
-	docker commit <containerID) figlet
+	docker commit <containerID> figlet
 	#+END_SRC
      7) Start a container based on that image using name
 	#+BEGIN_SRC sh
 	docker run -it figlet
 	#+END_SRC
+* Kind install
+** Install Kind
+
+   As user =ubunut= cd into your $HOME
+   #+BEGIN_SRC sh
+   su ubuntu
+   cd /home/ubuntu
+   #+END_SRC
+
+   Download =kind= binary
+   #+BEGIN_SRC sh
+   wget https://github.com/kubernetes-sigs/kind/releases/download/v0.3.0/kind-linux-amd64
+   #+END_SRC
+
+   Move the =kind= binary into your $PATH and make it available on your server
+   #+BEGIN_SRC sh
+   sudo mv kind-linux-amd64 /usr/local/bin/kind
+   #+END_SRC
+
+   Add permission for execution of =kind= binary
+   #+BEGIN_SRC sh
+   sudo chmod a+x /usr/local/bin/kind
+   #+END_SRC
+
+   Check that =kind= is working on your server
+   #+BEGIN_SRC sh
+   kind --help
+   #+END_SRC
+
+** Downlaod and setup kubectl
+   Downlaod the =kubectl= binary
+   #+BEGIN_SRC sh
+   curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+   #+END_SRC
+
+   Make the kubectl binary executable
+   #+BEGIN_SRC sh
+   chmod +x ./kubectl
+   #+END_SRC
+
+   Move the binary in to your PATH.
+   #+BEGIN_SRC sh
+   sudo mv ./kubectl /usr/local/bin/kubectl
+   #+END_SRC
+
+   Test to ensure the version you installed is working fine
+   #+BEGIN_SRC sh
+   kubectl version
+   #+END_SRC
+
+** Install kubectl completion
+   #+BEGIN_SRC sh
+   kubectl completion bash >> ~/.bashrc
+   source $HOME/.bashrc
+   #+END_SRC
+
+** Install a single node Kuberntes cluster
+   Using =kind= is as simple as...
+   #+BEGIN_SRC sh
+   kind create cluster
+   #+END_SRC
+
+   Connect the =kubectl= to your new cluster
+   #+BEGIN_SRC sh
+   export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
+   #+END_SRC
+
+   Ensure cluster is up and running
+   #+BEGIN_SRC sh
+   kubectl cluster-info
+   #+END_SRC
+
+   Quick look at the nodes
+   #+BEGIN_SRC sh
+   kubectl get nodes
+   #+END_SRC
+
+   Quick look at the workload
+   #+BEGIN_SRC sh
+   kubectl get pod
+   #+END_SRC
+
+   Start some workload using =nginx= webserver? docker hello world ?
+   #+BEGIN_SRC sh
+   kubectl run --image=nginx nginx
+   #+END_SRC
+
+   Quick look at the workload now
+   #+BEGIN_SRC sh
+   kubectl get pod
+   #+END_SRC
+
+
+   Check (in-cluster) that nginx is working fine
