@@ -178,6 +178,27 @@
 
     Check (in-cluster) that nginx is working fine
 * PaaS_L02_20190607
+** Exercise 3 - Inspect the ReplicaSet
+   Install jq (if not present)
+   #+BEGIN_SRC sh
+   sudo apt-get install jq
+   #+END_SRC
+
+   Look at all Pod
+   #+BEGIN_SRC sh
+   kubectl get pod -o json | jq '.items | .[] | .kind, .metadata.name, .metadata.ownerReferences'
+   #+END_SRC
+
+   Filter the name of the active ReplicaSets
+   #+BEGIN_SRC sh
+   kubectl get rs -o json | jq '.items | .[] | .metadata.name'
+   #+END_SRC
+
+   Compare those names with the following output
+   #+BEGIN_SRC sh
+   kubectl get pod
+   #+END_SRC
+
 ** Create a multi-node k8s cluster
    Remove the single node cluster to save resources
    #+BEGIN_SRC sh
