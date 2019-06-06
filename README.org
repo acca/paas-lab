@@ -198,6 +198,22 @@
    #+BEGIN_SRC sh
    kubectl get pod
    #+END_SRC
+** Exercise 6 - Labels and Selectors
+   Mark active Pods with some labels
+   #+BEGIN_SRC sh
+   kubectl get po -o json | jq -r '.items[] | .metadata.name' | head -n3 | xargs -I{} kubectl label pods {} app=frontend env=prod
+   #+END_SRC
+
+   #+BEGIN_SRC sh
+   kubectl get po -o json | jq -r '.items[] | .metadata.name' | tail -n2 | xargs -I{} kubectl label pods {} app=backend
+   #+END_SRC
+
+   #+BEGIN_SRC sh
+   kubectl get po -o json | jq -r '.items[] | .metadata.name' | tail -n1 | xargs -I{} kubectl label pods {} env=dev
+   #+END_SRC
+
+   Continue on the slides...
+
 
 ** Create a multi-node k8s cluster
    Remove the single node cluster to save resources
