@@ -214,8 +214,7 @@
 
    Continue on the slides...
 
-
-** Create a multi-node k8s cluster
+** Exercise 7 - Create a multi-node k8s cluster
    Remove the single node cluster to save resources
    #+BEGIN_SRC sh
    kind delete cluster --name kind
