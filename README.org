@@ -223,7 +223,7 @@
    Download multi-node cluster configuration
    #+BEGIN_SRC sh
    BRANCH=master
-   wget https://raw.githubusercontent.com/acca/paas-lab/$MASTER/kind-multi-node.yaml
+   wget https://raw.githubusercontent.com/acca/paas-lab/$BRANCH/kind-multi-node.yaml
    #+END_SRC
 
    Create a new multi-node cluster with =kind=
