@@ -1,0 +1,48 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: lb-example-edge
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lb-example-edge
+    spec:
+      nodeSelector:
+        region: "EDGE"
+      containers:
+      - name: worker
+        image: python:3.6-alpine
+        command:
+        - "/bin/sh"
+        - "-ecx"
+        - |
+          echo "I am pod: $MY_POD_NAME runing on node: $MY_NODE_NAME" | tee index.html
+          python -m http.server 8000 2>&1
+        env:
+        - name: MY_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "lb-example-edge"
+  annotations:
+    # Create endpoints also if the related pod isn't ready
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+spec:
+  type: NodePort
+  ports:
+  - port: 8000
+    nodePort: 30000
+    targetPort: 8000
+  selector:
+    app: lb-example-edge
