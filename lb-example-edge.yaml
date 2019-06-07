@@ -42,7 +42,7 @@ spec:
   type: NodePort
   ports:
   - port: 8000
-    nodePort: 30000
+    nodePort: 30001
     targetPort: 8000
   selector:
     app: lb-example-edge
