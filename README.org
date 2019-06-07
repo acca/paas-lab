@@ -245,3 +245,25 @@
    #+BEGIN_SRC sh
    kubectl get nodes
    #+END_SRC
+** Exercise 9 - External World-to-Pod Communication
+   Create the load balancer deplyment
+   #+BEGIN_SRC sh
+   kubectl create -f https://github.com/acca/paas-lab/raw/master/lb-example.yaml
+   #+END_SRC
+
+   Get the IP of the master node
+   #+BEGIN_SRC sh
+   MASTER=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kind-mn-control-plane`
+   #+END_SRC
+
+   Ensure the IP is correct
+   #+BEGIN_SRC sh
+   echo $MASTER
+   #+END_SRC
+
+   Why we use this IP?
+
+   Test access from the Lab Virtual Machine or from your browser
+   #+BEGIN_SRC sh
+   curl http://$MASTER:30000
+   #+END_SRC
