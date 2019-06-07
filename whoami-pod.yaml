@@ -1,9 +1,19 @@
-kind: Pod
-apiVersion: v1
+kind: Deployment
+apiVersion: extensions/v1beta1
 metadata:
   name: whoami
   namespace: default
 spec:
-  containers:
-  - name: whoami
-    image: jwilder/whoami
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: whoami
+    spec:
+      containers:
+      - name: whoami
+        image: jwilder/whoami
+        ports:
+          - name: whoami-iternal
+            containerPort: 8000
+
