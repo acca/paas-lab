@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
     sudo usermod -aG docker vagrant
     # Download and setup kind
     cd /home/vagrant
-    wget https://github.com/kubernetes-sigs/kind/releases/download/v0.3.0/kind-linux-amd64
+    wget --progress=bar:force https://github.com/kubernetes-sigs/kind/releases/download/v0.3.0/kind-linux-amd64
     sudo mv kind-linux-amd64 /usr/local/bin/kind
     sudo chmod a+x /usr/local/bin/kind
     # Download and setup kubectl
