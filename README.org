@@ -267,3 +267,12 @@
    #+BEGIN_SRC sh
    curl http://$MASTER:30000
    #+END_SRC
+* PaaS Lab Virtual Machine
+  In order to simplify the creation of a virtual machine similar to the one used in the Lab a =Vagrantfile= is provided.
+
+  For more information see: https://www.vagrantup.com/
+
+  To create the virtual machine on your laptop:
+  #+BEGIN_SRC sh
+  vagrant up
+  #+END_SRC
